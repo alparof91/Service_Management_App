@@ -30,7 +30,7 @@ namespace Service_Management_App
             List<Owner> owners = new List<Owner>();
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("GetOwners", connection);
+                SqlCommand cmd = new SqlCommand("spGetOwners", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 try
@@ -61,7 +61,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("SearchOwner", connection);
+                SqlCommand cmd = new SqlCommand("spSearchOwner", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Identity_Card_Number", SqlDbType.VarChar, 20).Value = iCNumber;
@@ -96,7 +96,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("InsertOwner", connection);
+                SqlCommand cmd = new SqlCommand("spInsertOwner", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@First_Name", SqlDbType.VarChar, 20).Value = owner.FirstName;
@@ -131,7 +131,7 @@ namespace Service_Management_App
             List<Car> cars = new List<Car>();
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("GetCars", connection);
+                SqlCommand cmd = new SqlCommand("spGetCars", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -162,7 +162,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("SearchCar", connection);
+                SqlCommand cmd = new SqlCommand("spSearchCar", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@License_Plate", SqlDbType.VarChar, 20).Value = licensePlate;
@@ -195,7 +195,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("InsertCar", connection);
+                SqlCommand cmd = new SqlCommand("spInsertCar", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Brand", SqlDbType.VarChar, 20).Value = car.Brand;
@@ -228,7 +228,7 @@ namespace Service_Management_App
             using (SqlConnection connection = new SqlConnection(conString))
             {
                 Trace.WriteLine(car);
-                SqlCommand cmd = new SqlCommand("RemoveCar", connection);
+                SqlCommand cmd = new SqlCommand("spRemoveCar", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Id_Car", SqlDbType.Int).Value = car.Id;
@@ -255,7 +255,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("UpdateCar", connection);
+                SqlCommand cmd = new SqlCommand("spUpdateCar", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Id_Car", SqlDbType.Int).Value = car.Id;

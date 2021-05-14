@@ -5,16 +5,15 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using Service_Management_App.Data;
 
 namespace Service_Management_App
 {
-    class ServiceDBController
+    class InterventionDBController
     {
         private string conString;
 
-        public ServiceDBController()
+        public InterventionDBController()
         {
             GetConnectionString();
             //Trace.WriteLine(conString);
@@ -26,12 +25,12 @@ namespace Service_Management_App
             return conString;
         }
 
-        public List<Service> GetServices()
+        public List<Intervention> GetInterventions()
         {
-            List<Service> services = new List<Service>();
+            List<Intervention> interventions = new List<Intervention>();
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("GetServices", connection);
+                SqlCommand cmd = new SqlCommand("spGetInterventions", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 try
@@ -40,7 +39,40 @@ namespace Service_Management_App
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        services.Add(new Service(reader.GetInt32(0), new ServiceType(reader.GetInt32(1), reader.GetString(2), reader.GetBoolean(6)), reader.GetString(3), reader.GetInt32(4), reader.GetDecimal(5), reader.GetBoolean(6)));
+                        interventions.Add(new Intervention(reader.GetInt32(0), new Car(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6), new Owner(reader.GetInt32(7))), new Employee (reader.GetString(8)), reader.GetDateTime(9), reader.GetString(10), reader.GetInt32(11), reader.GetBoolean(12)));
+                    }
+                    reader.Close();
+                    return interventions;
+                }
+                catch (SqlException)
+                {
+                    Trace.WriteLine("Problem here!");
+                    return interventions;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+        }
+
+        public List<Service> GetServiceForInterventions(int interventionID)
+        {
+            List<Service> services = new List<Service>();
+            using (SqlConnection connection = new SqlConnection(conString))
+            {
+                SqlCommand cmd = new SqlCommand("spGetServiceForIntervention", connection);
+                cmd.Connection = connection;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("@Id_Intervention", SqlDbType.Int).Value = interventionID;
+                try
+                {
+                    connection.Open();
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        services.Add(new Service(0, new ServiceType(0, reader.GetString(0), true), reader.GetString(1), 0, reader.GetDecimal(2), true));
                     }
                     reader.Close();
                     return services;
@@ -53,15 +85,7 @@ namespace Service_Management_App
                 finally
                 {
                     connection.Close();
-                    //StringBuilder sb;
-                    //foreach (var item in services)
-                    //{
-                    //    sb = new StringBuilder("INSERT INTO [dbo].[tblServices] ( [Type_ID], [Name], [Time], [Price], [Is_Active]) VALUES (");
-                    //    sb.Append(item.Type.Id).Append(", '").Append(item.Name).Append("', ").Append(item.Time.ToString()).Append(", ").Append(item.Price.ToString()).Append(", 1);");
-                    //    Trace.WriteLine(sb.ToString());
-                    //}
                 }
-
             }
         }
 

@@ -8,21 +8,22 @@
       Title="Interventions">
 
     <StackPanel Width="880">
-        <StackPanel Orientation="Horizontal">
-            <DataGrid ItemsSource="{Binding Path=FilteredInterventions,Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedIntervention}" AutoGenerateColumns="False" Height="230" Width="435" BorderBrush="Transparent" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightGray" CanUserAddRows="False" Margin="0,0,5,0">
+        <StackPanel Orientation="Horizontal" Background="#264653">
+            <DataGrid ItemsSource="{Binding Path=FilteredInterventions,Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedIntervention}" AutoGenerateColumns="False" Height="230" Width="550" BorderThickness="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightGray" CanUserAddRows="False" Margin="0,0,0,0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Car" Width="110" Binding="{Binding Car.ModelName}"/>
-                    <DataGridTextColumn Header="Lic Plate" Width="110" Binding="{Binding Car.LicensePlate}"/>
-                    <DataGridTextColumn Header="Date" Width="110" Binding="{Binding Date}"/>
-                    <DataGridTextColumn Header="Status" Width="110" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Car Model" Width="75" Binding="{Binding Car.ModelName}"/>
+                    <DataGridTextColumn Header="License Plate" Width="85" Binding="{Binding Car.LicensePlate}"/>
+                    <DataGridTextColumn Header="Employee" Width="110" Binding="{Binding Employee.FirstName}"/>
+                    <DataGridTextColumn Header="Intervention Date" Width="140" Binding="{Binding Date}"/>
+                    <DataGridTextColumn Header="Status" Width="80" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Paid[%]" Width="50" Binding="{Binding Paid}"/>
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid ItemsSource="{Binding Path=FilteredInterventions,Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedIntervention}" AutoGenerateColumns="False" Height="230" Width="435" BorderBrush="Transparent" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightGray" CanUserAddRows="False" Margin="5,0,0,0">
+            <DataGrid ItemsSource="{Binding Path=ServicesForInterventionOL,Mode=TwoWay,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" SelectedItem="{Binding SelectedService}" AutoGenerateColumns="False" Height="230" Width="300" BorderThickness="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightGray" CanUserAddRows="False" Margin="5,0,0,0">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Service" Width="110" Binding="{Binding Status}"/>
-                    <DataGridTextColumn Header="Employee" Width="110" Binding="{Binding Status}"/>
-                    <DataGridTextColumn Header="Price" Width="110" Binding="{Binding Status}"/>
-                    <DataGridTextColumn Header="Paid" Width="110" Binding="{Binding Status}"/>
+                    <DataGridTextColumn Header="Service Type" Width="75" Binding="{Binding Type.Name}"/>
+                    <DataGridTextColumn Header="Service Name" Width="140" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Price[RON]" Width="75" Binding="{Binding Price}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
@@ -31,25 +32,11 @@
                 <StackPanel Height="50" Margin="0,10,0,0">
                     <Label Content="Filters:" Width="390" HorizontalAlignment="Left" Foreground="Gray" Padding="0,0,0,0" Height="16" Margin="40,0,0,0"/>
                     <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5"  Width="800" Padding="5,5,5,5">
-                        <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Grid>
-                                <TextBox Text="{Binding FilterBrand}" Width="125"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="FilterBox1" Margin="10,0,10,0"/>
-                                <TextBlock IsHitTestVisible="False" Text="Brand" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
-                                    <TextBlock.Style>
-                                        <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text, ElementName=FilterBox1}" Value="">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                            </Grid>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
                             <Grid>
                                 <TextBox Text="{Binding FilterModel}" Width="125"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="FilterBox2" Margin="10,0,10,0"/>
-                                <TextBlock IsHitTestVisible="False" Text="Model" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
+                                <TextBlock IsHitTestVisible="False" Text="Car Model" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -78,8 +65,8 @@
                                 </TextBlock>
                             </Grid>
                             <Grid>
-                                <TextBox Text="{Binding FilterOwnerFirstName}" Width="125"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="FilterBox4" Margin="10,0,10,0"/>
-                                <TextBlock IsHitTestVisible="False" Text="Owner First Name" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
+                                <TextBox Text="{Binding FilterStatus}" Width="125"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="FilterBox4" Margin="10,0,10,0"/>
+                                <TextBlock IsHitTestVisible="False" Text="Status" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Visibility" Value="Collapsed"/>
@@ -92,17 +79,31 @@
                                     </TextBlock.Style>
                                 </TextBlock>
                             </Grid>
+                            <Grid>
+                                <TextBox Text="{Binding FilterPaid}" Width="125"  VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="FilterBox1" Margin="10,0,10,0"/>
+                                <TextBlock IsHitTestVisible="False" Text="Paid" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="20,0,10,0" Foreground="DarkGray">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Text, ElementName=FilterBox1}" Value="">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
                             <Button Content="Go" Command ="{Binding FilterCommand}" Width="125" Margin="20,0,10,0"/>
-                        </StackPanel>-->
+                        </StackPanel>
                     </Border>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Width="800" Height="20" VerticalAlignment="Stretch">
-                    <Label Content="Car Information:" Width="390" Foreground="Gray"  Margin="0,0,10,0" Padding="0,0,0,0" Height="13"/>
-                    <Label  Content="Owner Information:" Width="390" Foreground="Gray"  Margin="10,0,0,0" Padding="0,0,0,0" Height="13"/>
+                    <Label Content="Intervention Information:" Width="390" Foreground="Gray"  Margin="0,0,10,0" Padding="0,0,0,0" Height="13"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Width="800">
-                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5"  Width="390" Margin="0,0,10,0">
-                        <Grid Margin="5,5,5,5">
+                <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Margin="10,0,10,0" Width="800">
+                    <StackPanel Orientation="Horizontal" Width="800">
+                        <Grid Margin="5,5,20,5" Width="400">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*" />
                                 <ColumnDefinition Width="1*" />
@@ -114,46 +115,27 @@
                                 <RowDefinition Height="1*" />
                                 <RowDefinition Height="1*" />
                             </Grid.RowDefinitions>
-                            <!--<Label Content="Brand:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding Brand}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="Model Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding ModelName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="Model Year:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding ModelYear}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="Color:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding Color}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="License Plate:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding LicensePlate}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>-->
+                            <Label Content="License Plate:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                            <ComboBox ItemsSource="{Binding AvailableCars}" DisplayMemberPath="LicensePlate" SelectedValue = "{Binding Car}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Label Content="Employee:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                            <ComboBox ItemsSource="{Binding AvailableEmployees}" DisplayMemberPath="FirstName" SelectedValue = "{Binding Employee}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Label Content="Intervention Date:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                            <TextBox Text="{Binding Date}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Label Content="Status:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                            <ComboBox ItemsSource="{Binding StatusList}" SelectedItem = "{Binding Status}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <Label Content="Paid amount:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
+                            <TextBox Text="{Binding Paid}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
                         </Grid>
-                    </Border>
-                    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="5"  Width="390" Margin="10,0,0,0">
-                        <Grid Margin="5,5,5,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                                <RowDefinition Height="1*" />
-                            </Grid.RowDefinitions>
-                            <!--<Label Content="First Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding FirstName}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <Label Content="Second Name:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0"  Foreground="White"/>
-                            <TextBox Text="{Binding LastName}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="Identiy Card:" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0" Foreground="White"/>
-                            <TextBox Text="{Binding ICNumber}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                            <Label Content="Phone number:" Grid.Row="3" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0"  Foreground="White"/>
-                            <TextBox Text="{Binding Phone}" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0" />
-                            <Label Content="Email:" Grid.Row="4" Grid.Column="0" VerticalAlignment="Center" Margin="10,0,0,0"  Foreground="White"/>
-                            <TextBox Text="{Binding Email}" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0" />-->
-                        </Grid>
-                    </Border>
-                </StackPanel>
+                        <DataGrid ItemsSource="{Binding Path=SelectableServices, Mode=TwoWay, NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" AutoGenerateColumns="False" Height="125" Width="350" BorderThickness="0" HorizontalGridLinesBrush="Gray" VerticalGridLinesBrush="Gray" AlternatingRowBackground="LightGray" CanUserAddRows="False" Margin="5,0,0,0">
+                            <DataGrid.Columns>
+                                <DataGridCheckBoxColumn Header="Selected" Binding="{Binding IsSelected}" />
+                                <DataGridTextColumn Header="Service Type" Width="75" Binding="{Binding Service.Type.Name}"/>
+                                <DataGridTextColumn Header="Service Name" Width="120" Binding="{Binding Service.Name}"/>
+                                <DataGridTextColumn Header="Price[RON]" Width="75" Binding="{Binding Service.Price}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </StackPanel>
+                </Border>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <Button Content="Clear Fields" Command ="{Binding ClearFieldsCommand}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="20,15,20,15" Width="100"/>
@@ -161,7 +143,6 @@
                     <Button Content="Edit Selected" Command ="{Binding EditCommand}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="20,15,20,15" Width="100"/>
                     <Button Content="Remove Selected" Command ="{Binding RemoveCommand}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="20,15,20,15" Width="100"/>
                     <Button Content="Refresh" Command ="{Binding RefreshCommand}" Grid.Row="6" Grid.Column="0" VerticalAlignment="Center" Margin="20,15,20,15" Width="100"/>
-
                 </StackPanel>
             </StackPanel>
         </Grid>

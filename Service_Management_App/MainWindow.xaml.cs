@@ -33,6 +33,9 @@ namespace Service_Management_App
                 case 3:
                     MainFrame.Navigate(new System.Uri(@"View/Interventions.xaml", UriKind.Relative));
                     break;
+                case 4:
+                    MainFrame.Navigate(new System.Uri(@"View/Reports.xaml", UriKind.Relative));
+                    break;
                 default:
                     break;
             }

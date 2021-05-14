@@ -5,15 +5,16 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Service_Management_App.Data;
 
 namespace Service_Management_App
 {
-    class InterventionDBController
+    class ServiceDBController
     {
         private string conString;
 
-        public InterventionDBController()
+        public ServiceDBController()
         {
             GetConnectionString();
             //Trace.WriteLine(conString);
@@ -25,54 +26,21 @@ namespace Service_Management_App
             return conString;
         }
 
-        public List<Intervention> GetInterventions()
-        {
-            List<Intervention> interventions = new List<Intervention>();
-            using (SqlConnection connection = new SqlConnection(conString))
-            {
-                SqlCommand cmd = new SqlCommand("GetInterventions", connection);
-                cmd.Connection = connection;
-                cmd.CommandType = CommandType.StoredProcedure;
-                try
-                {
-                    connection.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        interventions.Add(new Intervention(reader.GetInt32(0), new Car(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6), new Owner(reader.GetInt32(7))), reader.GetDateTime(8), reader.GetString(9), reader.GetBoolean(10)));
-                    }
-                    reader.Close();
-                    return interventions;
-                }
-                catch (SqlException)
-                {
-                    Trace.WriteLine("Problem here!");
-                    return interventions;
-                }
-                finally
-                {
-                    connection.Close();
-                }
-
-            }
-        }
-
-        public List<Service> GetServiceForInterventions(Intervention intervention)
+        public List<Service> GetServices()
         {
             List<Service> services = new List<Service>();
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("GetServiceForIntervention", connection);
+                SqlCommand cmd = new SqlCommand("spGetServices", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.Add("@Id_Intervention", SqlDbType.Int).Value = intervention.Id;
                 try
                 {
                     connection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        //services.Add(new Intervention(reader.GetInt32(0), new Car(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetInt32(4), reader.GetString(5), reader.GetString(6), new Owner(reader.GetInt32(7))), reader.GetDateTime(8), reader.GetString(9), reader.GetBoolean(10)));
+                        services.Add(new Service(reader.GetInt32(0), new ServiceType(reader.GetInt32(1), reader.GetString(2), reader.GetBoolean(6)), reader.GetString(3), reader.GetInt32(4), reader.GetDecimal(5), reader.GetBoolean(6)));
                     }
                     reader.Close();
                     return services;
@@ -85,6 +53,13 @@ namespace Service_Management_App
                 finally
                 {
                     connection.Close();
+                    //StringBuilder sb;
+                    //foreach (var item in services)
+                    //{
+                    //    sb = new StringBuilder("INSERT INTO [dbo].[tblServices] ( [Type_ID], [Name], [Time], [Price], [Is_Active]) VALUES (");
+                    //    sb.Append(item.Type.Id).Append(", '").Append(item.Name).Append("', ").Append(item.Time.ToString()).Append(", ").Append(item.Price.ToString()).Append(", 1);");
+                    //    Trace.WriteLine(sb.ToString());
+                    //}
                 }
 
             }

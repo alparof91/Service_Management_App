@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 
@@ -13,14 +14,27 @@ namespace Service_Management_App
     public class InterventionViewModel : BaseViewModel
     {
         #region Backing Fields
-        InterventionDBController connection = new InterventionDBController();
+        private InterventionDBController interventionConnection = new InterventionDBController();
+        private CarDBController carConnection = new CarDBController();
+        private EmployeeDBController employeeConnection = new EmployeeDBController();
+        private ServiceDBController serviceConnection = new ServiceDBController();
+
         private List<Intervention> _interventions = new List<Intervention>();
-        List<Service> ServicesForIntervention;
         private ObservableCollection<Intervention> _filteredInterventions = new ObservableCollection<Intervention>();
         private Intervention _selectedIntervention;
+        private ObservableCollection<Service> _servicesForInterventionOL = new ObservableCollection<Service>();
+        private ObservableCollection<string> _statusList = new ObservableCollection<string>() { "Programat", "In Lucru", "Terminat" };
+        private ObservableCollection<Car> _availableCars = new ObservableCollection<Car>();
+        private ObservableCollection<Employee> _availableEmployees = new ObservableCollection<Employee>();
+        private List<Service> _services = new List<Service>();
+        private ObservableCollection<SelectableService> _selectableServices = new ObservableCollection<SelectableService>();
+
         private string _car = String.Empty;
+        private string _employee = String.Empty;
+        private string _licensePlate = String.Empty;
         private string _date = String.Empty;
         private string _status = String.Empty;
+        private string _paid;
         #endregion
 
         #region Constructor
@@ -51,6 +65,32 @@ namespace Service_Management_App
             get { return _filteredInterventions; }
             set { _filteredInterventions = value; }
         }
+        public ObservableCollection<Service> ServicesForInterventionOL
+        {
+            get { return _servicesForInterventionOL; }
+            set { _servicesForInterventionOL = value; }
+        }
+        public ObservableCollection<string> StatusList
+        {
+            get { return _statusList; }
+            set { _statusList = value; }
+        }
+        public ObservableCollection<Car> AvailableCars
+        {
+            get { return _availableCars; }
+            set { _availableCars = value; }
+        }
+        public ObservableCollection<Employee> AvailableEmployees
+        {
+            get { return _availableEmployees; }
+            set { _availableEmployees = value; }
+        }
+        public ObservableCollection<SelectableService> SelectableServices
+        {
+            get { return _selectableServices; }
+            set { _selectableServices = value; }
+        }
+
         public Intervention SelectedIntervention
         {
             get { return _selectedIntervention; }
@@ -81,6 +121,41 @@ namespace Service_Management_App
                 }
             }
         }
+
+        public string Employee
+        {
+            get
+            {
+                return this._employee;
+            }
+
+            set
+            {
+                if (value != this._employee)
+                {
+                    this._employee = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public string LicensePlate
+        {
+            get
+            {
+                return this._licensePlate;
+            }
+
+            set
+            {
+                if (value != this._licensePlate)
+                {
+                    this._licensePlate = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         public string Date
         {
             get
@@ -97,6 +172,7 @@ namespace Service_Management_App
                 }
             }
         }
+
         public string Status
         {
             get
@@ -109,6 +185,23 @@ namespace Service_Management_App
                 if (value != this._status)
                 {
                     this._status = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public string Paid
+        {
+            get
+            {
+                return this._paid;
+            }
+
+            set
+            {
+                if (value != this._paid)
+                {
+                    this._paid = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -205,29 +298,37 @@ namespace Service_Management_App
 
         public void Refresh()
         {
-            _interventions = connection.GetInterventions();
+            _interventions = interventionConnection.GetInterventions();
+            Utils.listToObservable<Car>(AvailableCars, carConnection.GetCars());
+            Utils.listToObservable<Employee>(AvailableEmployees, employeeConnection.GetEmployees());
 
             // before  FilteredCars.Clear() the SelectedCar needs to point to a valid location
             // (with  FilteredCars.Clear(), the referenced object will disappear, and will give error at Display Fields)
             SelectedIntervention = null;
             FilteredInterventions.Clear();
-
             _interventions.ForEach(x => FilteredInterventions.Add(x));
+            SelectedIntervention = FilteredInterventions[0];
+
+            Utils.listToObservable(ServicesForInterventionOL, interventionConnection.GetServiceForInterventions(SelectedIntervention.Id));
+            _services = serviceConnection.GetServices();
+            Utils.checkboxFilter(SelectableServices, ServicesForInterventionOL, _services);
+
             ClearFields();
         }
 
         public void DisplayDetails()
         {
-            ServicesForIntervention = connection.GetServiceForInterventions(SelectedIntervention);
-            //if (SelectedIntervention != null)
-            //    SetFields(SelectedCar.Brand, SelectedCar.ModelName, SelectedCar.ModelYear.ToString(), SelectedCar.Color, SelectedCar.LicensePlate, SelectedCar.Owner.FirstName, SelectedCar.Owner.LastName, SelectedCar.Owner.ICNumber, SelectedCar.Owner.Phone, SelectedCar.Owner.Email, FilterBrand, FilterModel, FilterLicensePlate, FilterOwnerFirstName);
+            Utils.listToObservable(ServicesForInterventionOL, interventionConnection.GetServiceForInterventions(SelectedIntervention.Id));
+            if (SelectedIntervention != null)
+                SetFields(SelectedIntervention.Car.ModelName, SelectedIntervention.Employee.FirstName, SelectedIntervention.Car.LicensePlate, SelectedIntervention.Date.ToString(), SelectedIntervention.Status, SelectedIntervention.Paid.ToString());
+            Utils.checkboxFilter(SelectableServices, ServicesForInterventionOL, _services);
         }
         #endregion
 
         #region Helper Functions
         private void ClearFields()
         {
-            SetFields(String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty);
+            SetFields(String.Empty, String.Empty, String.Empty, String.Empty, String.Empty, String.Empty);
         }
 
         private int ParseToInt(string input)
@@ -243,23 +344,14 @@ namespace Service_Management_App
             }
         }
 
-        private void SetFields(string brand, string modelName, string modelYear, string color, string licensePlate, string firstName, string lastName, string iCNumber, string phone, string email, string brandFilter, string modelFilter, string licensePlateFilter, string ownerFirstNameFilter)
+        private void SetFields(string modelName, string employee, string licensePlate, string date, string status, string paid)
         {
-            //Brand = brand;
-            //ModelName = modelName;
-            //ModelYear = modelYear;
-            //Color = color;
-            //LicensePlate = licensePlate;
-            //FirstName = firstName;
-            //LastName = lastName;
-            //ICNumber = iCNumber;
-            //Phone = phone;
-            //Email = email;
-            //FilterBrand = brandFilter;
-            //FilterModel = modelFilter;
-            //FilterLicensePlate = licensePlateFilter;
-            //FilterOwnerFirstName = ownerFirstNameFilter;
-
+            Car = modelName;
+            Employee = employee;
+            LicensePlate = licensePlate;
+            Date = date;
+            Status = status;
+            Paid = paid;
         }
 
         private bool ValidateInput()

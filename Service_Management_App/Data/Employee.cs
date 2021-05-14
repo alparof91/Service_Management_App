@@ -14,6 +14,11 @@ namespace Service_Management_App.Data
         public string Email { get; set; }
         public bool IsActive { get; set; }
 
+        public Employee(string firstName)
+        {
+            this.FirstName = firstName;
+        }
+
         public Employee(int id, string firstName, string lastName, string iCNumber, DateTime hiringDate, string phone, string email, bool isActive)
         {
             this.Id = id;

@@ -29,7 +29,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("SearchEmployee", connection);
+                SqlCommand cmd = new SqlCommand("spSearchEmployee", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Identity_Card_Number", SqlDbType.VarChar, 20).Value = iCNumber;
@@ -98,7 +98,7 @@ namespace Service_Management_App
             List<Employee> employees = new List<Employee>();
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("GetEmployees", connection);
+                SqlCommand cmd = new SqlCommand("spGetEmployees", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 try
@@ -129,7 +129,7 @@ namespace Service_Management_App
         {
             using (SqlConnection connection = new SqlConnection(conString))
             {
-                SqlCommand cmd = new SqlCommand("UpdateEmployee", connection);
+                SqlCommand cmd = new SqlCommand("spUpdateEmployee", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Id_Employee", SqlDbType.Int).Value = employee.Id;
@@ -164,7 +164,7 @@ namespace Service_Management_App
             using (SqlConnection connection = new SqlConnection(conString))
             {
                 Trace.WriteLine(employee);
-                SqlCommand cmd = new SqlCommand("RemoveEmployee", connection);
+                SqlCommand cmd = new SqlCommand("spRemoveEmployee", connection);
                 cmd.Connection = connection;
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("@Id_Employee", SqlDbType.Int).Value = employee.Id;

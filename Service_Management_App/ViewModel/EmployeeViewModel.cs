@@ -335,7 +335,7 @@ namespace Service_Management_App
 
             List<Employee> temp = new List<Employee>();
             temp = FilterByFirstName(_employees);
-            temp = FilterUtils.FilterByLastName(temp, FilterLastName);
+            temp = Utils.FilterByLastName(temp, FilterLastName);
             temp = FilterByICNumber(temp);
             temp = FilterByPhone(temp);
             temp.ForEach(x => FilteredEmployees.Add(x));
