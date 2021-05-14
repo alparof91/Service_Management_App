@@ -1,0 +1,62 @@
+﻿<Window x:Class="Service_Management_App.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="CSMA - Car Service Management App" Height="600" Width="1080" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Window.Resources>
+        <BitmapImage x:Key="Logo" UriSource="Img/Car.png"/>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid Height="60" VerticalAlignment="Top" Background="#264653">
+            <TextBlock Padding="200,0,0,0" Text="Car Service Management App" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="White"/>
+        </Grid>
+        <Grid Width="200" HorizontalAlignment="Left" Background="#2A9D8F">
+            <StackPanel>
+                <Image Height="150" Width="200" Source="{StaticResource Logo}"/>
+                <ListView x:Name="ListViewMenu" Background="#2A9D8F" Foreground="White" SelectionChanged="ListSelectionChanged">
+                    <ListViewItem Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <TextBlock Text="Employees" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <TextBlock Text="Cars" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <TextBlock Text="Services" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <TextBlock Text="Interventions" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
+                        </StackPanel>
+                    </ListViewItem>
+                    <ListViewItem Height="50">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <TextBlock Text="Reports" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
+                        </StackPanel>
+                    </ListViewItem>
+                </ListView>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,150,0,0">
+                    <Button Content="Log out" Foreground ="White" Background="Transparent" Margin="0,0,50,0" BorderBrush="Transparent"/>
+                    <Button Content="Exit" Foreground ="White" Background="Transparent"  Margin="50,0,0,0" BorderBrush="Transparent"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        <Grid Margin="200,60,0,0">
+            <Frame x:Name="MainFrame" HorizontalAlignment="Center" VerticalAlignment="Center" NavigationUIVisibility="Hidden" >
+            </Frame>
+        </Grid>
+    </Grid>
+</Window>
