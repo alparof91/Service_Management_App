@@ -7,11 +7,18 @@
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <EnableNETAnalyzers>false</EnableNETAnalyzers>
     <SignAssembly>false</SignAssembly>
+    <ApplicationIcon>services.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="Img\Car.png" />
     <None Remove="Img\Car2.png" />
+    <None Remove="Img\Icons\automotive.png" />
+    <None Remove="Img\Icons\businessman.png" />
+    <None Remove="Img\Icons\engineering.png" />
+    <None Remove="Img\Icons\list.png" />
+    <None Remove="Img\Icons\print.png" />
+    <None Remove="Img\Icons\services.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,8 +26,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Img\Car.png" />
+    <Content Include="Img\Car.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Img\Car2.png" />
+    <Content Include="Img\Icons\businessman.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\Icons\automotive.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\Icons\engineering.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\Icons\list.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\Icons\print.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Img\Icons\services.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

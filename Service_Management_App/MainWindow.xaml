@@ -7,8 +7,14 @@
         Title="CSMA - Car Service Management App" Height="600" Width="1080" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
     <Window.Resources>
         <BitmapImage x:Key="Logo" UriSource="Img/Car.png"/>
+        <BitmapImage x:Key="Favicon" UriSource="Img/Icons/engineering.png"/>
+        <BitmapImage x:Key="Employees" UriSource="Img/Icons/businessman.png"/>
+        <BitmapImage x:Key="Cars" UriSource="Img/Icons/automotive.png"/>
+        <BitmapImage x:Key="Services" UriSource="Img/Icons/list.png"/>
+        <BitmapImage x:Key="Interventions" UriSource="Img/Icons/engineering.png"/>
+        <BitmapImage x:Key="Reports" UriSource="Img/Icons/print.png"/>
     </Window.Resources>
-    
+
     <Grid>
         <Grid Height="60" VerticalAlignment="Top" Background="#264653">
             <TextBlock Padding="200,0,0,0" Text="Car Service Management App" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30" Foreground="White"/>
@@ -16,39 +22,39 @@
         <Grid Width="200" HorizontalAlignment="Left" Background="#2A9D8F">
             <StackPanel>
                 <Image Height="150" Width="200" Source="{StaticResource Logo}"/>
-                <ListView x:Name="ListViewMenu" Background="#2A9D8F" Foreground="White" SelectionChanged="ListSelectionChanged">
+                <ListView x:Name="ListViewMenu" Background="#2A9D8F" Foreground="White" SelectionChanged="ListSelectionChanged" BorderThickness="0">
                     <ListViewItem Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <Image Height="25" Width="25" Source="{StaticResource Employees}" Margin="10,0,10,0"/>
                             <TextBlock Text="Employees" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <Image Height="25" Width="25" Source="{StaticResource Cars}" Margin="10,0,10,0"/>
                             <TextBlock Text="Cars" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <Image Height="25" Width="25" Source="{StaticResource Services}" Margin="10,0,10,0"/>
                             <TextBlock Text="Services" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <Image Height="25" Width="25" Source="{StaticResource Interventions}" Margin="10,0,10,0"/>
                             <TextBlock Text="Interventions" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Left" Width="50" />
+                            <Image Height="25" Width="25" Source="{StaticResource Reports}" Margin="10,0,10,0"/>
                             <TextBlock Text="Reports" VerticalAlignment="Center" HorizontalAlignment="Right" Width="100" FontSize="15" />
                         </StackPanel>
                     </ListViewItem>
                 </ListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,150,0,0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,120,0,0">
                     <Button Content="Log out" Foreground ="White" Background="Transparent" Margin="0,0,50,0" BorderBrush="Transparent"/>
                     <Button Content="Exit" Foreground ="White" Background="Transparent"  Margin="50,0,0,0" BorderBrush="Transparent"/>
                 </StackPanel>
