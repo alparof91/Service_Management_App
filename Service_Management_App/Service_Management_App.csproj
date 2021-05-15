@@ -50,4 +50,8 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Img\Presentation\" />
+  </ItemGroup>
+
 </Project>
